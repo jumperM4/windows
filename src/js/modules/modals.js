@@ -1,12 +1,16 @@
 const modals = () => {
   function bindModal(triggerSelector, modalSelector, closeSelector) {
-    const trigger = document.querySelectorAll(triggerSelector),
+    const triggers = document.querySelectorAll(triggerSelector),
       modal = document.querySelector(modalSelector),
       close = document.querySelector(closeSelector);
-    console.log(trigger, modal, close);
 
-    trigger.forEach((item) => {
-      item.addEventListener("click", (e) => {
+    function closeModel() {
+      modal.style.display = "none";
+      document.body.style.overflow = "";
+    }
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener("click", (e) => {
         if (e.target) {
           e.preventDefault();
         }
@@ -18,15 +22,21 @@ const modals = () => {
     });
 
     close.addEventListener("click", () => {
-      modal.style.display = "none";
-      document.body.style.overflow = "";
+      closeModel();
+      //document.body.classList.remove("modal-open");
+    });
+
+    document.addEventListener("keydown", (e) => {
+      console.log(e);
+      if (e.code === "Escape") {
+        closeModel();
+      }
       //document.body.classList.remove("modal-open");
     });
 
     modal.addEventListener("click", (e) => {
       if (e.target === modal) {
-        modal.style.display = "none";
-        document.body.style.overflow = "";
+        closeModel();
         //document.body.classList.remove("modal-open");
       }
     });
@@ -37,7 +47,7 @@ const modals = () => {
   //     modalEngineerClose = document.querySelector(".popup_engineer .popup_close");
 
   function showModalByTime(selector, time) {
-    setTimeout(function () {
+    setTimeout(() => {
       document.querySelector(selector).style.display = "block";
       document.body.style.overflow = "hidden";
     }, time);
