@@ -27,7 +27,6 @@ const modals = () => {
     });
 
     document.addEventListener("keydown", (e) => {
-      console.log(e);
       if (e.code === "Escape") {
         closeModel();
       }
