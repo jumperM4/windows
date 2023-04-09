@@ -23,11 +23,7 @@ const tabs = ({
     tabs[i].classList.add(activeClass);
   };
 
-  hideTabContent();
-  showTabContent();
-
-  header.addEventListener("click", (e) => {
-    const { target } = e;
+  const actionByClickAndKeydown = (target) => {
     if (
       target.classList.contains(tabSelector.replace(/\./, "")) ||
       target.parentNode.classList.contains(tabSelector.replace(/\./, ""))
@@ -39,22 +35,20 @@ const tabs = ({
         }
       });
     }
+  };
+
+  header.addEventListener("click", (e) => {
+    const { target } = e;
+    actionByClickAndKeydown(target);
   });
 
   header.addEventListener("keydown", (e) => {
     const { target } = e;
-    if (
-      target.classList.contains(tabSelector.replace(/\./, "")) ||
-      target.parentNode.classList.contains(tabSelector.replace(/\./, ""))
-    ) {
-      tabs.forEach((tabItem, index) => {
-        if (target === tabItem || target.parentNode === tabItem) {
-          hideTabContent();
-          showTabContent(index);
-        }
-      });
-    }
+    actionByClickAndKeydown(target);
   });
+
+  hideTabContent();
+  showTabContent();
 };
 
 export default tabs;
