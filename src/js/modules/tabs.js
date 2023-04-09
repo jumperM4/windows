@@ -1,9 +1,9 @@
-const tabs = (
+const tabs = ({
   headerSelector,
   tabSelector,
   contentItemSelector,
-  activeClass
-) => {
+  activeClass,
+}) => {
   const header = document.querySelector(headerSelector);
   const tabs = document.querySelectorAll(tabSelector);
   const contentItems = document.querySelectorAll(contentItemSelector);
@@ -27,6 +27,21 @@ const tabs = (
   showTabContent();
 
   header.addEventListener("click", (e) => {
+    const { target } = e;
+    if (
+      target.classList.contains(tabSelector.replace(/\./, "")) ||
+      target.parentNode.classList.contains(tabSelector.replace(/\./, ""))
+    ) {
+      tabs.forEach((tabItem, index) => {
+        if (target === tabItem || target.parentNode === tabItem) {
+          hideTabContent();
+          showTabContent(index);
+        }
+      });
+    }
+  });
+
+  header.addEventListener("keydown", (e) => {
     const { target } = e;
     if (
       target.classList.contains(tabSelector.replace(/\./, "")) ||
