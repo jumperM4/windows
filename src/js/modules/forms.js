@@ -17,11 +17,14 @@ const forms = () => {
 
   const postData = async (url, data) => {
     document.querySelector(".status").textContent = message.loading;
-    let result = await fetch(url, {
+    const result = await fetch(url, {
       method: "POST",
-      body: data,
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+      body: JSON.stringify(data),
     });
-    return await result.text();
+    return await result;
   };
 
   const clearInputs = () => {
@@ -34,14 +37,13 @@ const forms = () => {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      let statusMessage = document.createElement("div");
+      const statusMessage = document.createElement("div");
       statusMessage.classList.add("status");
       form.appendChild(statusMessage);
 
-      const formData = new FormData(form);
-      //console.log(formData);
+      const formData = form;
 
-      postData("assets/server.php", formData)
+      postData("https://just-server-yo3y.onrender.com", formData)
         .then((res) => {
           console.log(res);
           statusMessage.textContent = message.success;
