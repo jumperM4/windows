@@ -20,7 +20,7 @@ const forms = () => {
     const result = await fetch(url, {
       method: "POST",
       headers: {
-        "Content-type": "application/json; charset=UTF-8",
+        "Content-type": "application/json",
       },
       body: JSON.stringify(data),
     });
@@ -41,11 +41,12 @@ const forms = () => {
       statusMessage.classList.add("status");
       form.appendChild(statusMessage);
 
-      const formData = form;
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach((value, key) => (data[key] = value));
 
-      postData("https://just-server-yo3y.onrender.com", formData)
+      postData("https://just-server-yo3y.onrender.com/api/data", data)
         .then((res) => {
-          console.log(res);
           statusMessage.textContent = message.success;
         })
         .catch(() => {
