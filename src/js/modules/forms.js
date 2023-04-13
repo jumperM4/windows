@@ -1,13 +1,11 @@
-const forms = () => {
+import { formatPostcssSourceMap } from "vite";
+import checkNumInputs from "./checkNumInputs";
+
+const forms = (state) => {
   const forms = document.querySelectorAll("form");
   const inputs = document.querySelectorAll("input");
-  const phoneInputs = document.querySelectorAll('input[name="user_phone"]');
 
-  phoneInputs.forEach((input) => {
-    input.addEventListener("input", () => {
-      input.value = input.value.replace(/\D/, "");
-    });
-  });
+  checkNumInputs('input[name="user_phone"]');
 
   const message = {
     loading: "Загрузка...",
@@ -42,8 +40,16 @@ const forms = () => {
       form.appendChild(statusMessage);
 
       const formData = new FormData(form);
+      console.log(formData);
+      if (form.getAttribute("data-calc") === "end") {
+        for (let key in state) {
+          formData.append(key, state[key]);
+        }
+      }
+      console.log(formData);
       const data = {};
       formData.forEach((value, key) => (data[key] = value));
+      console.log(data);
 
       postData("https://just-server-yo3y.onrender.com/api/data", data)
         .then((res) => {
