@@ -1,4 +1,3 @@
-import { formatPostcssSourceMap } from "vite";
 import checkNumInputs from "./checkNumInputs";
 
 const forms = (state) => {
@@ -40,16 +39,14 @@ const forms = (state) => {
       form.appendChild(statusMessage);
 
       const formData = new FormData(form);
-      console.log(formData);
+
       if (form.getAttribute("data-calc") === "end") {
         for (let key in state) {
           formData.append(key, state[key]);
         }
       }
-      console.log(formData);
       const data = {};
       formData.forEach((value, key) => (data[key] = value));
-      console.log(data);
 
       postData("https://just-server-yo3y.onrender.com/api/data", data)
         .then((res) => {
