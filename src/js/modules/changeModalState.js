@@ -12,23 +12,13 @@ const changeModalState = (state) => {
 
   const bindActionToElems = (event, elem, property) => {
     elem.forEach((item, index) => {
-      console.log(item);
       item.addEventListener(event, () => {
         switch (item.nodeName) {
           case "SPAN":
             state[property] = index;
             break;
           case "INPUT":
-            if (item.getAttribute("type") === "checkbox") {
-              elem.forEach((box, j) => {
-                box.checked = false;
-                if (index == j) {
-                  box.checked = true;
-                }
-              });
-            } else {
-              state[property] = item.value;
-            }
+            state[property] = item.value;
             break;
           case "SELECT":
             state[property] = item.value;
