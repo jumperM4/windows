@@ -1,8 +1,12 @@
 import modals from "./modules/modals";
 import tabs from "./modules/tabs";
 import forms from "./modules/forms";
+import changeModalState from "./modules/changeModalState";
 
 window.addEventListener("DOMContentLoaded", () => {
+  let modalState = {};
+  changeModalState(modalState);
+
   modals();
   tabs({
     headerSelector: ".glazing_slider",
@@ -16,5 +20,12 @@ window.addEventListener("DOMContentLoaded", () => {
     contentItemSelector: ".decoration_content > div > div",
     activeClass: "after_click",
   });
-  forms();
+  tabs({
+    headerSelector: ".balcon_icons",
+    tabSelector: ".balcon_icons_img",
+    contentItemSelector: ".big_img > img",
+    activeClass: "do_image_more",
+    display: "inline-block",
+  });
+  forms(modalState);
 });
