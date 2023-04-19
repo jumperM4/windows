@@ -6,7 +6,7 @@ import timer from "./modules/timer";
 
 window.addEventListener("DOMContentLoaded", () => {
   let modalState = {};
-  let deadline = "2023-05-01";
+  const deadline = "2023-05-01";
   changeModalState(modalState);
 
   modals();

@@ -1,26 +1,31 @@
 const timer = (id, deadline) => {
   const addZero = (num) => {
-    if (num <= 9) {
-      return "0" + num;
-    } else {
-      return num;
-    }
+    return num <= 9 ? "0" + num : num;
   };
 
   const getTimeRemaining = (endtime) => {
-    const t = Date.parse(endtime) - Date.parse(new Date());
+    const total = Date.parse(endtime) - Date.parse(new Date());
 
-    const seconds = Math.floor((t / 1000) % 60);
-    const minutes = Math.floor((t / 1000 / 60) % 60);
-    const hours = Math.floor((t / (1000 * 60 * 60)) % 24);
-    const days = Math.floor(t / (1000 * 60 * 60 * 24));
+    const d = new Date(total);
+    const [hour, minute, second] = d
+      .toLocaleString("ru-RU", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      })
+      .split(":");
+
+    const seconds = second;
+    const minutes = minute;
+    const hours = hour - 3;
+    const days = Math.floor(total / (1000 * 60 * 60 * 24));
 
     return {
-      total: t,
-      days: days,
-      hours: hours,
-      minutes: minutes,
-      seconds: seconds,
+      total,
+      days,
+      hours,
+      minutes,
+      seconds,
     };
   };
 
@@ -38,10 +43,15 @@ const timer = (id, deadline) => {
     function updateClock() {
       const t = getTimeRemaining(endTime);
 
+      // days.textContent = addZero(t.days);
+      // hours.textContent = addZero(t.hours);
+      // minutes.textContent = addZero(t.minutes);
+      // seconds.textContent = addZero(t.seconds);
+
       days.textContent = addZero(t.days);
       hours.textContent = addZero(t.hours);
-      minutes.textContent = addZero(t.minutes);
-      seconds.textContent = addZero(t.seconds);
+      minutes.textContent = t.minutes;
+      seconds.textContent = t.seconds;
 
       if (t.total <= 0) {
         days.textContent = "00";
