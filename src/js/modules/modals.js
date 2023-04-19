@@ -9,6 +9,7 @@ const modals = () => {
     const modal = document.querySelector(modalSelector);
     const close = document.querySelector(closeSelector);
     const windows = document.querySelectorAll("[data-modal]");
+    const scroll = calcScroll();
 
     function closeModel() {
       modal.style.display = "none";
@@ -27,12 +28,14 @@ const modals = () => {
 
         modal.style.display = "block";
         document.body.style.overflow = "hidden";
+        document.body.style.marginRight = `${scroll}px`;
         //document.body.classList.add("modal-open");
       });
     });
 
     close.addEventListener("click", () => {
       closeModel();
+      document.body.style.marginRight = `0px`;
       //document.body.classList.remove("modal-open");
     });
 
@@ -43,6 +46,7 @@ const modals = () => {
         });
 
         closeModel();
+        document.body.style.marginRight = `0px`;
       }
       //document.body.classList.remove("modal-open");
     });
@@ -53,6 +57,7 @@ const modals = () => {
           window.style.display = "";
         });
         closeModel();
+        document.body.style.marginRight = `0px`;
         //document.body.classList.remove("modal-open");
       }
     });
@@ -67,6 +72,20 @@ const modals = () => {
       document.querySelector(selector).style.display = "block";
       document.body.style.overflow = "hidden";
     }, time);
+  }
+
+  function calcScroll() {
+    let div = document.createElement("div");
+    div.style.width = "50px";
+    div.style.height = "50px";
+    div.style.overflowY = "scroll";
+    div.style.visibility = "hidden";
+
+    document.body.appendChild(div);
+    let scrollWidth = div.offsetWidth - div.clientWidth;
+    div.remove();
+
+    return scrollWidth;
   }
 
   bindModal(
